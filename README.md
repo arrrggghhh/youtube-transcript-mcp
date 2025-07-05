@@ -55,6 +55,8 @@ Add the YouTube Transcript MCP server to the `mcpServers` section:
         "command": "/path/to/uv",
         "args": [
             "run",
+            "--directory",
+            "/path/to/cloned/directory",
             "--with",
             "mcp[cli]",
             "--with",
