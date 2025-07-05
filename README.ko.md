@@ -55,6 +55,8 @@ uv sync
         "command": "/path/to/uv",
         "args": [
             "run",
+            "--directory",
+            "/path/to/cloned/directory",
             "--with",
             "mcp[cli]",
             "--with",
