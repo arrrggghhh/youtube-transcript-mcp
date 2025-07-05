@@ -19,7 +19,7 @@ YouTube 동영상의 자막을 가져오는 기능을 제공하는 Model Context
 
 ```bash
 # 저장소 클론
-git clone https://github.com/yourusername/youtube-transcript-mcp.git
+git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
 cd youtube-transcript-mcp
 
 # 의존성 설치
@@ -30,7 +30,7 @@ uv sync
 
 ```bash
 # 저장소 클론
-git clone https://github.com/yourusername/youtube-transcript-mcp.git
+git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
 cd youtube-transcript-mcp
 
 # 가상 환경 생성

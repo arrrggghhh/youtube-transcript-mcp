@@ -19,7 +19,7 @@ A Model Context Protocol (MCP) server that provides YouTube transcript fetching 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/youtube-transcript-mcp.git
+git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
 cd youtube-transcript-mcp
 
 # Install dependencies
@@ -30,7 +30,7 @@ uv sync
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/youtube-transcript-mcp.git
+git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
 cd youtube-transcript-mcp
 
 # Create virtual environment
