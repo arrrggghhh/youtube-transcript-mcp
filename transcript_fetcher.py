@@ -9,4 +9,4 @@ def get_transcript(video_id):
     langs = (LANGS or 'ko,en').split(',')
     transcript: FetchedTranscript = YouTubeTranscriptApi().fetch(video_id=video_id, languages=langs)
     combined = [i.text for i in transcript]
-    return '\n'.join(combined)
+    return ' '.join(combined)
