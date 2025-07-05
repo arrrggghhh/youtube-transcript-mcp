@@ -26,21 +26,6 @@ cd youtube-transcript-mcp
 uv sync
 ```
 
-### Install with pip
-
-```bash
-# Clone the repository
-git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
-cd youtube-transcript-mcp
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -e .
-```
-
 ## Configuration
 
 ### Environment Variables
@@ -66,43 +51,25 @@ Add the YouTube Transcript MCP server to the `mcpServers` section:
 ```json
 {
   "mcpServers": {
-    "youtube-transcript": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/path/to/youtube-transcript-mcp",
-        "run",
-        "youtube-transcript-mcp"
-      ],
-      "env": {
-        "YOUTUBE_TRANSCRIPT_FETCHER_LANGS": "ko,en"
-      }
+    "youtube-transcript-mcp": {
+        "command": "/path/to/uv",
+        "args": [
+            "run",
+            "--with",
+            "mcp[cli]",
+            "--with",
+            "youtube_transcript_api",
+            "mcp",
+            "run",
+            "/path/to/youtube-transcript-mcp.py"
+        ]
     }
   }
 }
 ```
 
-**Important**: Replace `/path/to/youtube-transcript-mcp` with the actual path to your cloned repository.
+**Important**: Replace `/path/to/uv` with the actual path to your uv executable, and `/path/to/youtube-transcript-mcp.py` with the actual path to the youtube-transcript-mcp.py file in your cloned repository.
 
-### Alternative: Using Python directly
-
-If you're not using uv, you can configure it to use Python directly:
-
-```json
-{
-  "mcpServers": {
-    "youtube-transcript": {
-      "command": "python",
-      "args": [
-        "/path/to/youtube-transcript-mcp/youtube-transcript-mcp.py"
-      ],
-      "env": {
-        "YOUTUBE_TRANSCRIPT_FETCHER_LANGS": "ko,en"
-      }
-    }
-  }
-}
-```
 
 ### 3. Restart Claude Desktop
 
@@ -110,15 +77,15 @@ After saving the configuration file, restart Claude Desktop for the changes to t
 
 ## Usage
 
-Once the MCP server is added, you can use it in Claude Desktop by asking Claude to fetch YouTube transcripts:
+Once the MCP server is added, you can use it in Claude Desktop by asking Claude to analyze YouTube videos:
 
 ```
-"Get the transcript for YouTube video dQw4w9WgXcQ"
-"Fetch the transcript from https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-"What does the YouTube video with ID dQw4w9WgXcQ talk about?"
+"Summarize the YouTube video dQw4w9WgXcQ"
+"What are the key points from https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+"Give me a brief overview of the content in video ID dQw4w9WgXcQ"
 ```
 
-The server will automatically extract the video ID and fetch the transcript in the configured languages.
+The server will automatically extract the video ID, fetch the transcript in the configured languages, and Claude will analyze and summarize the content.
 
 ## Development
 
@@ -132,48 +99,3 @@ youtube-transcript-mcp/
 ├── uv.lock                   # Dependency lock file
 └── README.md                 # This file
 ```
-
-### Running locally for testing
-
-```bash
-# With uv
-uv run youtube-transcript-mcp
-
-# With Python
-python youtube-transcript-mcp.py
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"No transcript found" error**
-   - The video might not have captions available
-   - Try a different video or check if the video has captions on YouTube
-
-2. **Language not available**
-   - The requested language might not be available for the video
-   - The server will fall back to other configured languages
-
-3. **MCP server not showing in Claude**
-   - Ensure the configuration path is correct
-   - Check that all dependencies are installed
-   - Restart Claude Desktop after configuration changes
-
-### Debug Mode
-
-To see detailed logs, you can run the server with debug logging:
-
-```bash
-# Set logging level to DEBUG
-export LOG_LEVEL=DEBUG
-uv run youtube-transcript-mcp
-```
-
-## License
-
-[Your chosen license]
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.

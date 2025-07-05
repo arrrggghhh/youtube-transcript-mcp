@@ -26,21 +26,6 @@ cd youtube-transcript-mcp
 uv sync
 ```
 
-### pip로 설치
-
-```bash
-# 저장소 클론
-git clone https://github.com/arrrggghhh/youtube-transcript-mcp.git
-cd youtube-transcript-mcp
-
-# 가상 환경 생성
-python -m venv venv
-source venv/bin/activate  # Windows의 경우: venv\Scripts\activate
-
-# 의존성 설치
-pip install -e .
-```
-
 ## 설정
 
 ### 환경 변수
@@ -66,43 +51,25 @@ pip install -e .
 ```json
 {
   "mcpServers": {
-    "youtube-transcript": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/path/to/youtube-transcript-mcp",
-        "run",
-        "youtube-transcript-mcp"
-      ],
-      "env": {
-        "YOUTUBE_TRANSCRIPT_FETCHER_LANGS": "ko,en"
-      }
+    "youtube-transcript-mcp": {
+        "command": "/path/to/uv",
+        "args": [
+            "run",
+            "--with",
+            "mcp[cli]",
+            "--with",
+            "youtube_transcript_api",
+            "mcp",
+            "run",
+            "/path/to/youtube-transcript-mcp.py"
+        ]
     }
   }
 }
 ```
 
-**중요**: `/path/to/youtube-transcript-mcp`를 실제 클론한 저장소 경로로 바꿔주세요.
+**중요**: `/path/to/uv`를 uv 실행 파일의 실제 경로로, `/path/to/youtube-transcript-mcp.py`를 실제 클론한 저장소의 youtube-transcript-mcp.py 파일 경로로 바꿔주세요.
 
-### 대안: Python 직접 사용
-
-uv를 사용하지 않는 경우, Python을 직접 사용하도록 설정할 수 있습니다:
-
-```json
-{
-  "mcpServers": {
-    "youtube-transcript": {
-      "command": "python",
-      "args": [
-        "/path/to/youtube-transcript-mcp/youtube-transcript-mcp.py"
-      ],
-      "env": {
-        "YOUTUBE_TRANSCRIPT_FETCHER_LANGS": "ko,en"
-      }
-    }
-  }
-}
-```
 
 ### 3. Claude Desktop 재시작
 
@@ -110,15 +77,15 @@ uv를 사용하지 않는 경우, Python을 직접 사용하도록 설정할 수
 
 ## 사용법
 
-MCP 서버가 추가되면 Claude Desktop에서 YouTube 자막을 가져오도록 요청할 수 있습니다:
+MCP 서버가 추가되면 Claude Desktop에서 YouTube 동영상을 분석하도록 요청할 수 있습니다:
 
 ```
-"YouTube 동영상 dQw4w9WgXcQ의 자막을 가져와줘"
-"https://www.youtube.com/watch?v=dQw4w9WgXcQ 동영상의 자막을 가져와줘"
-"ID가 dQw4w9WgXcQ인 YouTube 동영상은 어떤 내용인가요?"
+"YouTube 동영상 dQw4w9WgXcQ을 요약해줘"
+"https://www.youtube.com/watch?v=dQw4w9WgXcQ 의 핵심 내용이 뭐야?"
+"동영상 ID dQw4w9WgXcQ의 내용을 간단히 설명해줘"
 ```
 
-서버는 자동으로 동영상 ID를 추출하고 설정된 언어로 자막을 가져옵니다.
+서버는 자동으로 동영상 ID를 추출하고 설정된 언어로 자막을 가져온 후, Claude가 내용을 분석하고 요약합니다.
 
 ## 개발
 
@@ -130,50 +97,5 @@ youtube-transcript-mcp/
 ├── transcript_fetcher.py      # 핵심 자막 가져오기 로직
 ├── pyproject.toml            # 프로젝트 설정
 ├── uv.lock                   # 의존성 잠금 파일
-└── README.md                 # 영문 README
+└── README.md
 ```
-
-### 로컬에서 테스트 실행
-
-```bash
-# uv 사용
-uv run youtube-transcript-mcp
-
-# Python 사용
-python youtube-transcript-mcp.py
-```
-
-## 문제 해결
-
-### 일반적인 문제
-
-1. **"자막을 찾을 수 없음" 오류**
-   - 동영상에 자막이 없을 수 있습니다
-   - 다른 동영상을 시도하거나 YouTube에서 해당 동영상에 자막이 있는지 확인하세요
-
-2. **언어를 사용할 수 없음**
-   - 요청한 언어가 해당 동영상에 없을 수 있습니다
-   - 서버는 다른 설정된 언어로 대체합니다
-
-3. **Claude에 MCP 서버가 표시되지 않음**
-   - 설정 경로가 올바른지 확인하세요
-   - 모든 의존성이 설치되었는지 확인하세요
-   - 설정 변경 후 Claude Desktop을 재시작하세요
-
-### 디버그 모드
-
-자세한 로그를 보려면 디버그 로깅으로 서버를 실행할 수 있습니다:
-
-```bash
-# 로깅 레벨을 DEBUG로 설정
-export LOG_LEVEL=DEBUG
-uv run youtube-transcript-mcp
-```
-
-## 라이선스
-
-[선택한 라이선스]
-
-## 기여하기
-
-기여를 환영합니다! 자유롭게 Pull Request를 제출해주세요.
